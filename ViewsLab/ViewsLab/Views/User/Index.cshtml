@@ -3,6 +3,22 @@
 }
 
 <h2>Users</h2>
+<div id="message"></div>
+<div id="userGrid">
+     @Html.Action("UserGrid", "User", new{pageSize = ViewBag.pageSize, page = ViewBag.page, sort = ViewBag.sort})
+</div>
 
-@*TODO: complete this view*@
-
+ <script>   
+        $(document).ready(function () {
+            $("#userGrid a").live('click', function (event) {
+                if ($(event.target).attr("href").indexOf("UserDetail") == -1) {
+                    event.preventDefault();
+                    var href = $(this).attr("href");
+                    var queryString = href.substring(href.indexOf('?'), href.length);
+                    var requestUrl =
+                        '@Url.Action("UserGrid", "User")' + queryString;
+                    $("#userGrid").load(requestUrl);
+                }
+            });
+        });
+  </script>

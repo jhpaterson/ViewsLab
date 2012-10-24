@@ -1,4 +1,5 @@
-﻿
+﻿@using ViewsLab.Helpers
+
 @{
     ViewBag.Title = "Index";
     string url = ViewBag.Url;
@@ -10,5 +11,15 @@
 <p>Click on the image to go to details page</p>
 
 <div>
-    <a href='@Url.Action("Details", new { id = 1 })'><img src="/Images/transsiberian.jpg" alt="Trans-Siberian Express" style="border-width:5px; border-style: solid; border-color: red" /></a>
+    @Html.ImageLink("Details", 
+        url, 
+        alt, 
+        new { id = idValue }, 
+        null, 
+        new { style = "border-width:5px; border-style: solid; border-color: red" })
+
+    
+   @* <a href='@Url.Action("Details", new { id = idValue })'><img src="@url" alt="@alt" style="border-width:5px; border-style: solid; border-color: red" /></a>*@
+
+   @* <a href='@Url.Action("Details", new { id = 1 })'><img src="/Images/transsiberian.jpg" alt="Trans-Siberian Express" style="border-width:5px; border-style: solid; border-color: red" /></a>*@
 </div>

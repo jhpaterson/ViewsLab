@@ -20,15 +20,40 @@ namespace ViewsLab.Controllers
 
         public ActionResult Index(string pageSize, string page, string sort)
         {
-            // TODO: complete this method
+            ViewBag.pageSize = pageSize;
+            ViewBag.page = page;
+            ViewBag.sort = sort;
             return View();
         }
 
         public ActionResult UserGrid(string pageSize, string page, string sort)
         {
-            // TODO: complete this method
+            int pageSizeNo = 5;   // default page size
+            if (!string.IsNullOrEmpty(pageSize))
+            {
+                pageSizeNo = int.Parse(pageSize);
+            }
+            
+            int pageNo = 0;   // first page by default
+            if (!string.IsNullOrEmpty(page))
+            {
+                pageNo = int.Parse(page) - 1;
+            }
 
-            return PartialView();
+            // get page from repository
+            var users = repository.Get(pageSizeNo, pageNo, sort);
+
+            // get total number of users in repository
+            var userCount = repository.Count();
+
+            // set up view model
+            var model = new UserGridModel();
+            model.Users = users;
+            model.RowCount = userCount;
+            model.CurrentPage = pageNo;
+            model.PageSize = pageSizeNo;
+
+            return PartialView(model);
         }
 
         public ActionResult UserDetail(string username)
